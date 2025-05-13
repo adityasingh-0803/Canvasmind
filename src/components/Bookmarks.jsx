@@ -49,4 +49,12 @@ const Bookmarks = () => {
               className="mr-2"
             />
             <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-blue-600">Go</a>
-            <button onClick={() => removeBookmark(link
+            <button onClick={() => removeBookmark(link.id)} className="ml-2 text-red-500">x</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default Bookmarks;
