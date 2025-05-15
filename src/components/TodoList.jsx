@@ -1,63 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from "react";
 
-const TodoList = () => {
-  const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem('todo-tasks');
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem('todo-tasks', JSON.stringify(tasks));
-  }, [tasks]);
+export default function TodoList() {
+  const [tasks, setTasks] = useState([]);
+  const [input, setInput] = useState("");
 
   const addTask = () => {
-    setTasks([...tasks, { id: uuidv4(), text: '', done: false }]);
+    if (input.trim()) {
+      setTasks([...tasks, input]);
+      setInput("");
+    }
   };
 
-  const toggleTask = (id) => {
-    setTasks(tasks.map(task =>
-      task.id === id ? { ...task, done: !task.done } : task
-    ));
-  };
-
-  const updateText = (id, text) => {
-    setTasks(tasks.map(task =>
-      task.id === id ? { ...task, text } : task
-    ));
-  };
-
-  const removeTask = (id) => {
-    setTasks(tasks.filter(task => task.id !== id));
+  const removeTask = (index) => {
+    const newTasks = [...tasks];
+    newTasks.splice(index, 1);
+    setTasks(newTasks);
   };
 
   return (
-    <div className="bg-white p-4 rounded shadow">
-      <div className="flex justify-between items-center mb-2">
-        <h2 className="text-lg font-semibold">✅ To-Do List</h2>
-        <button onClick={addTask} className="text-sm bg-blue-200 px-2 py-1 rounded">Add</button>
+    <div className="bg-white p-4 rounded-xl shadow">
+      <h2 className="text-xl font-semibold mb-3">📝 To-Do List</h2>
+      <div className="flex mb-2">
+        <input
+          className="border p-2 flex-grow rounded-l"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Add new task"
+        />
+        <button className="bg-blue-500 text-white px-4 rounded-r" onClick={addTask}>
+          Add
+        </button>
       </div>
-      <ul>
-        {tasks.map(task => (
-          <li key={task.id} className="flex items-center mb-2">
-            <input
-              type="checkbox"
-              checked={task.done}
-              onChange={() => toggleTask(task.id)}
-              className="mr-2"
-            />
-            <input
-              type="text"
-              value={task.text}
-              onChange={(e) => updateText(task.id, e.target.value)}
-              className="flex-1 bg-transparent outline-none"
-            />
-            <button onClick={() => removeTask(task.id)} className="ml-2 text-red-500">x</button>
+      <ul className="list-disc pl-5">
+        {tasks.map((task, i) => (
+          <li key={i} className="mb-1 flex justify-between">
+            {task}
+            <button onClick={() => removeTask(i)} className="text-red-500">
+              ❌
+            </button>
           </li>
         ))}
       </ul>
     </div>
   );
-};
-
-export default TodoList;
+}
