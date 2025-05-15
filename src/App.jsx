@@ -1,19 +1,19 @@
-import React from 'react';
-import StickyNote from './components/StickyNote';
-import TodoList from './components/TodoList';
-import Bookmarks from './components/Bookmarks';
+import React from "react";
+import TodoList from "./components/TodoList";
+import Notes from "./components/Notes";
+import Timer from "./components/Timer";
+import HabitTracker from "./components/HabitTracker";
 
-function App() {
+export default function App() {
   return (
-    <div className="min-h-screen p-4">
-      <h1 className="text-3xl font-bold text-center mb-6">🧠 CanvasMind</h1>
-      <div className="grid md:grid-cols-3 gap-6">
-        <StickyNote />
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-4xl font-bold mb-6">🧠 CanvasMind Dashboard</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <TodoList />
-        <Bookmarks />
+        <Notes />
+        <Timer />
+        <HabitTracker />
       </div>
     </div>
   );
 }
-
-export default App;
