@@ -14,3 +14,9 @@
     "vite": "^4.0.0"
   }
 }
+{
+  // ...other package.json fields
+  "engines": {
+    "node": "18.x"
+  }
+}
